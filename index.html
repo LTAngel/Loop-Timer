@@ -36,6 +36,7 @@
             value="00:01:30"
             class="textbox"
             autocomplete="off"
+            title="Enter time in seconds or HH:MM:SS up to 86399 seconds or 23:59:59"
           />
           <label for="loop" class="loop">Loop:</label>
           <input type="checkbox" id="loop" name="loop" onclick="showLoops()" />
@@ -46,6 +47,7 @@
             name="loops"
             autocomplete="off"
             class="textbox"
+            title="Leave blank to loop infinitely"
           />
           <div>
             <button id="1" type="button" onclick="startStop()">Start</button>
