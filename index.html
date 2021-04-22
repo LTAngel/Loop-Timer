@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Automatically reset your timer to begin again at specified intervals or trigger at certain times."
+    />
+    <title>Looper</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <img src="looper.png" alt="logo" class="logo" />
+
+        <nav>
+          <ul>
+            <li><a class="active" href="#">Stopwatch</a></li>
+            <li><a href="#">Clock</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="maincont container">
+      <h1 id="output">1:30</h1>
+      <div class="secondary">
+        <form action="" class="settings">
+          <label for="startTime">Starting Time:</label>
+          <input
+            type="text"
+            id="startTimeBox"
+            name="startTime"
+            value="00:01:30"
+            class="textbox"
+            autocomplete="off"
+          />
+          <label for="loop" class="loop">Loop:</label>
+          <input type="checkbox" id="loop" name="loop" onclick="showLoops()" />
+          <label for="loops" id="loops"># of loops:</label>
+          <input
+            type="text"
+            id="loopbox"
+            name="loops"
+            autocomplete="off"
+            class="textbox"
+          />
+          <div>
+            <button id="1" type="button" onclick="startStop()">Start</button>
+            <button type="button" onclick="setTimer()">Set / Reset</button>
+          </div>
+        </form>
+      </div>
+      <div class="audiobox">
+        <div>
+          <h2>Settings</h2>
+          <form action="">
+            <label for="soundOptions">Sound:</label>
+            <select class="text-form-field" name="sounds" id="sounds">
+              <option value="Level Up">Level Up</option>
+              <!--sounds from zapsplat-->
+
+              <option value="airplane bell">airplane bell</option>
+              <option value="whistle">whistle</option>
+              <option value="chime">chime</option>
+              <option value="bells">bells</option>
+              <option value="bells 2">bells 2</option>
+              <option value="beep">beep</option>
+              <option value="announcement">announcement</option>
+              <option value="uploadSound" onchange="">Uploaded Sound</option>
+            </select>
+            <button type="button" onclick="playSound()">Test</button>
+            <button type="button" onclick="pauseSound()">Stop</button>
+            <input
+              type="range"
+              class="rangeValue"
+              id="rangeValue"
+              min="0"
+              max="100"
+              oninput="soundValue.value = rangeValue.value"
+            />
+            <input
+              type="text"
+              id="soundValue"
+              min="0"
+              max="100"
+              value="50"
+              oninput="changeRange()"
+            />
+          </form>
+        </div>
+        <div>
+          <form class="uploadForm" action="">
+            <label for="customInput">Upload your own sound: </label>
+            <input type="file" id="inputFile" accept="audio/mp3" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
