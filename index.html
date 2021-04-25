@@ -10,16 +10,16 @@
     />
     <title>Looper</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="tabIcon.png" />
   </head>
   <body>
     <header>
       <div class="container">
         <img src="looper.png" alt="logo" class="logo" />
-
         <nav>
           <ul>
-            <li><a class="active" href="#">Stopwatch</a></li>
-            <li><a href="#">Clock</a></li>
+            <li><a class="active" href="index.html">Timer</a></li>
+            <li><a href="clock.html">Hourly</a></li>
           </ul>
         </nav>
       </div>
@@ -33,8 +33,9 @@
             type="text"
             id="startTimeBox"
             name="startTime"
-            value="00:01:30"
+            placeholder="HH:MM:SS or seconds"
             class="textbox"
+            autofill
             autocomplete="off"
             title="Enter time in seconds or HH:MM:SS up to 86399 seconds or 23:59:59"
           />
@@ -47,18 +48,19 @@
             name="loops"
             autocomplete="off"
             class="textbox"
-            title="Leave blank to loop infinitely"
+            title="Leave blank to loop indefinitely"
+            placeholder="&infin;"
           />
           <div>
-            <button id="1" type="button" onclick="startStop()">Start</button>
             <button type="button" onclick="setTimer()">Set / Reset</button>
+            <button id="1" type="button" onclick="startStop()">Start</button>
           </div>
         </form>
       </div>
       <div class="audiobox">
         <div>
           <h2>Settings</h2>
-          <form action="">
+          <form action="" id="soundForm">
             <label for="soundOptions">Sound:</label>
             <select class="text-form-field" name="sounds" id="sounds">
               <option value="Level Up">Level Up</option>
@@ -69,9 +71,9 @@
               <option value="chime">chime</option>
               <option value="bells">bells</option>
               <option value="bells 2">bells 2</option>
-              <option value="beep">beep</option>
+              <option value="beep">car beep</option>
               <option value="announcement">announcement</option>
-              <option value="uploadSound" onchange="">Uploaded Sound</option>
+              <option value="uploadSound">Use Custom Sound</option>
             </select>
             <button type="button" onclick="playSound()">Test</button>
             <button type="button" onclick="pauseSound()">Stop</button>
@@ -81,7 +83,7 @@
               id="rangeValue"
               min="0"
               max="100"
-              oninput="soundValue.value = rangeValue.value"
+              oninput="changeVol()"
             />
             <input
               type="text"

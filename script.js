@@ -2,7 +2,7 @@ var secondsGiven = 0;
 var timerOn = 0;
 var t;
 var checkedBox = 0;
-var audio;
+var audio = new Audio();
 
 //show or hide loop box
 function showLoops(){
@@ -59,6 +59,7 @@ function countdown(){
         var secs = new Date(secondsGiven * 1000).toISOString().substr(11, 8);
         var result = secs.replace(/^0(?:0:0?)?/, '');
         document.getElementById("output").innerHTML = result;
+        document.title = `${result} Looper`
 
     }
 
@@ -108,21 +109,26 @@ function countdown(){
     
 }
 
-
 //play audio file selected
 function playSound(){
+
+    if(!audio.paused){
+        audio.pause();
+    }
     
     var soundFile = document.getElementById("sounds").value;
     
     if(soundFile == "uploadSound"){
 
         var sound = URL.createObjectURL(document.getElementById("inputFile").files[0]);
-        audio = new Audio(sound);
+        audio.src = sound;
 
         
         
     }else{
-        audio = new Audio(`sounds/${soundFile}.mp3`);
+
+        audio.src = `sounds/${soundFile}.mp3`;
+        //audio = new Audio(`sounds/${soundFile}.mp3`);
     }
 
     
@@ -133,6 +139,7 @@ function playSound(){
 function pauseSound(){
     audio.pause();
 }
+
 
 
 //convert HH:MM:SS to seconds
@@ -189,5 +196,12 @@ function changeRange(){
     }else{
         document.getElementById("rangeValue").value = document.getElementById("soundValue").value;
     }
+    audio.volume = document.getElementById("rangeValue").value / 100;
 }
+
+function changeVol(){
+    document.getElementById("soundValue").value = document.getElementById("rangeValue").value;
+    audio.volume = document.getElementById("rangeValue").value / 100;
+}
+
 

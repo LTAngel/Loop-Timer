@@ -1,0 +1,242 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
+
+body {
+  margin: 0;
+  background: #121212;
+  text-align: center;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+header {
+  background: rgb(30, 33, 34);
+  box-shadow: 0 4px 8px 0 rgb(148, 128, 73);
+
+  /*linear-gradient(
+    90deg,
+    rgb(30, 33, 34) 10%,
+    rgb(89, 102, 112) 90%
+  );*/
+}
+
+header::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.logo {
+  float: left;
+}
+
+nav ul {
+  float: left;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block;
+  padding: 20px 0.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.63);
+  font-family: "Source Sans Pro";
+  font-size: 16px;
+  padding: 1rem 1rem;
+}
+
+nav a:hover {
+  color: rgb(221, 111, 38);
+  transition: ease-in 400ms;
+}
+
+.active {
+  color: rgb(252, 139, 34);
+}
+
+.maincont {
+  background: rgba(255, 255, 255, 0.096);
+  position: relative;
+  margin-top: 85px;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 8px 0 rgb(0, 0, 0, 0.5);
+  margin-bottom: 50px;
+}
+
+div {
+  display: block;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  color: #fff;
+  font-family: "Source Sans Pro";
+  font-size: 14px;
+  padding: 0px;
+}
+
+p {
+  font-family: "Source Sans Pro";
+  color: white;
+  font-size: 50px;
+  margin-top: -30px;
+}
+
+h2 {
+  color: #fff;
+  font-family: "Source Sans Pro";
+  font-size: 15px;
+  text-align: left;
+  margin: 5px;
+  padding: 0;
+}
+
+h3 {
+  text-align: center;
+  color: #fff;
+  font-family: "Source Sans Pro";
+  font-size: 25px;
+  padding: 0px;
+}
+
+.secondary {
+  width: 50%;
+  background: rgba(255, 255, 255, 0.185);
+  padding: 25px;
+  border-radius: 15px;
+  position: relative;
+  box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.26);
+  margin: auto;
+}
+
+.audiobox {
+  width: 50%;
+  background: rgba(255, 255, 255, 0.185);
+  padding: 7px 15px;
+  position: relative;
+  margin-top: 20px;
+  left: 25%;
+  border-radius: 15px;
+  box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.26);
+}
+
+label {
+  color: white;
+  font-family: "Source Sans Pro";
+}
+
+.textbox {
+  width: 150px;
+  text-align: center;
+}
+
+form {
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+
+button {
+  width: 100px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-family: "Source Sans Pro";
+}
+
+.text-form-field {
+  width: 150px;
+  text-align-last: center;
+}
+
+#soundValue {
+  width: 30px;
+  text-align: center;
+}
+
+.rangeValue {
+  -webkit-appearance: none;
+  height: 8px;
+  border-radius: 5px;
+  background: white;
+  outline: none;
+}
+
+.uploadForm {
+  color: white;
+  padding-bottom: 1rem;
+}
+
+.alarmBox {
+  width: 50%;
+  background: rgba(255, 255, 255, 0.185);
+  padding: 7px 15px;
+  position: relative;
+  margin-top: 0;
+  left: 25%;
+  border-radius: 15px;
+  box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.26);
+}
+
+ul {
+  list-style: none;
+  color: white;
+  font-weight: bold;
+  font-family: "Source Sans Pro";
+}
+
+.delete {
+  background: none;
+  border: 0px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-weight: bold;
+  font-family: "Source Sans Pro";
+  text-decoration: underline;
+}
+
+::placeholder {
+  color: rgba(128, 128, 128, 0.705);
+}
+
+#output {
+  color: white;
+  font-weight: bold;
+  font-size: 50px;
+  margin-top: 0px;
+}
+
+option {
+  font-family: "Source Sans Pro";
+}
+
+#curTime {
+  font-size: 20px;
+}
+
+#setToolTip {
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+#nextAlarm {
+  font-weight: bold;
+}
+
+#soundForm {
+  margin-bottom: 1rem;
+}

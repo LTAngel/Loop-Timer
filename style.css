@@ -37,6 +37,7 @@ nav ul {
   margin: 0;
   padding: 0;
   list-style: none;
+  font-weight: bold;
 }
 
 nav li {
@@ -86,7 +87,8 @@ h1 {
   color: #fff;
   font-family: "Source Sans Pro";
   font-size: 100px;
-  padding: 150px;
+  padding: 143px;
+  margin: 0;
 }
 
 h2 {
@@ -138,6 +140,8 @@ form {
 button {
   width: 100px;
   margin-top: 1rem;
+
+  font-family: "Source Sans Pro";
 }
 
 .loop {
@@ -169,7 +173,14 @@ button {
 }
 
 .uploadForm {
-  margin-top: 1rem;
   color: white;
   padding-bottom: 1rem;
+}
+
+::placeholder {
+  color: rgba(128, 128, 128, 0.705);
+}
+
+#soundForm {
+  margin-bottom: 1rem;
 }
