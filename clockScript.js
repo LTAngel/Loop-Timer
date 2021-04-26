@@ -84,6 +84,7 @@ function addAlarm(){
     
     document.getElementById("startButton").innerHTML = "Start";
     timerOn = 0;
+    document.getElementById("nextAlarm").innerHTML = "--:--"
     
     var li = document.createElement("li");
     var inputValue = document.getElementById("startTimeBox").value;
@@ -209,6 +210,7 @@ function startAlarms() {
     else{
         document.getElementById("startButton").innerHTML = "Start";
         timerOn = 0;
+        document.getElementById("nextAlarm").innerHTML = "--:--"
         
     }
     
