@@ -1,7 +1,6 @@
 var secondsGiven = 0;
 var timerOn = 0;
 var t;
-var checkedBox = 0;
 var audio = new Audio();
 
 function setLoad(){
@@ -47,12 +46,12 @@ function showLoops(){
     if(checkBox.checked == true){
         loops.style.display = "inline";
         loopbox.style.display = "inline";
-        checkedBox = 1;
+        
         
     }else{
         loops.style.display = "none";
         loopbox.style.display = "none";
-        checkedBox = 0;
+        
         
     }
 }
@@ -66,7 +65,7 @@ function startStop(){
     //reset if clock is at zero
     if(inputTime == "0:00"){
         document.getElementById("output").innerHTML = inputTime = document.getElementById("startTimeBox").value;
-        if(checkedBox){
+        if(document.getElementById("loop").checked){
 
         }
     }
@@ -99,6 +98,8 @@ function countdown(){
         document.title = `${result} Looper`
 
     }
+
+    var checkedBox = document.getElementById("loop").checked;
 
     if(secondsGiven == 0){
         setZero();

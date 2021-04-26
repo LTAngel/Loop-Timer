@@ -1,8 +1,5 @@
-var alarmTime;
 var timerOn = 0;
-var z;
 var audio;
-let curElem = 0;
 var elemArray = [];
 var elemText = [];
 var audio = new Audio();
@@ -139,7 +136,8 @@ function addAlarm(){
 
     var newTime = convertSecs(inputValue);
 
-    if(inputValue == ""){
+    if(inputValue == "" || !inputValue.includes(":")){
+        alert("Enter a time in the format MM:SS")
         return;
     }
     else if(newTime > 3599 || newTime < 0){
@@ -186,7 +184,6 @@ function addAlarm(){
     deleteButton.onclick = deleteTask;
     li.appendChild(deleteButton);
 
-    clearTimeout(z);
 }
 
 function deleteTask(){
@@ -232,25 +229,6 @@ function appendZeroes(timeValue){
 
 function startAlarms() {
     
-    var today = new Date();
-    var curSecs = today.getMinutes() * 60 + today.getSeconds();
-    var i = 0;
-    curElem = 0;
-
-    while(curSecs < elemArray[i] && elemArray[i] != undefined){
-        i++;
-    }
-    
-
-    if(i == elemArray.length){
-        alarmTime = elemArray[0] + 3600 - curSecs;
-        curElem = 0;
-    }
-    else{
-        curElem = i;
-        alarmTime = elemArray[curElem] - curSecs;
-    }
-
     if(!timerOn){
         document.getElementById("startButton").innerHTML = "Stop Alarm";
         timerOn = 1;
@@ -265,14 +243,31 @@ function startAlarms() {
 }
 
 function countdown(){ 
+
     
     var today = new Date();
-
     var curSecs = today.getMinutes() * 60 + today.getSeconds();
+    
+    var i = 0;
+    var curElem = 0;
+
+    while(curSecs > elemArray[i] && elemArray[i] != undefined){
+        i++;
+    }
+    
+    var alarmTime;
+
+    if(i == elemArray.length){
+        alarmTime = elemArray[0] + 3600 - curSecs;
+        curElem = 0;
+    }
+    else{
+        curElem = i;
+        alarmTime = elemArray[curElem] - curSecs;
+    }
 
     alarmTime = elemArray[curElem] - curSecs;
 
-    
     if(alarmTime < 0){
         alarmTime += 3600;
         
