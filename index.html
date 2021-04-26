@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="tabIcon.png" />
   </head>
-  <body>
+  <body onload="setLoad()" onunload="setOptions()">
     <header>
       <div class="container">
         <img src="looper.png" alt="logo" class="logo" />
@@ -86,12 +86,14 @@
               oninput="changeVol()"
             />
             <input
-              type="text"
+              type="number"
               id="soundValue"
               min="0"
               max="100"
               value="50"
               oninput="changeRange()"
+              autocomplete="off"
+              title="Volume"
             />
           </form>
         </div>

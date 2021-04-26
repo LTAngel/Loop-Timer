@@ -4,6 +4,41 @@ var t;
 var checkedBox = 0;
 var audio = new Audio();
 
+function setLoad(){
+
+    
+    if(localStorage.getItem('checked') == "true"){
+        document.getElementById("loop").checked = localStorage.getItem('checked');
+        showLoops();
+        document.getElementById("loopbox").value = localStorage.getItem('loopTimes');
+    }
+    if(localStorage.getItem('startTime')){
+        document.getElementById("output").innerHTML = localStorage.getItem('startTime');
+        document.getElementById("startTimeBox").value = localStorage.getItem('startTime');
+    }
+    if(localStorage.getItem('selectedSound')){
+        document.getElementById("sounds").value = localStorage.getItem('selectedSound');
+        document.getElementById("soundValue").value = localStorage.getItem('soundVolume');
+        document.getElementById("rangeValue").value = localStorage.getItem('soundVolume')
+    }
+    else{
+        document.getElementById("sounds").value = "Level Up";
+        document.getElementById("soundValue").value = 50;
+        document.getElementById("rangeValue").value = 50;
+    }
+
+}
+
+function setOptions(){
+    
+    localStorage.setItem('checked', document.getElementById("loop").checked);
+    localStorage.setItem('loopTimes', document.getElementById("loopbox").value);
+    localStorage.setItem('startTime', document.getElementById("startTimeBox").value);
+    localStorage.setItem('selectedSound', document.getElementById("sounds").value);
+    localStorage.setItem('soundVolume', document.getElementById("rangeValue").value)
+
+}
+
 //show or hide loop box
 function showLoops(){
     var checkBox = document.getElementById("loop");
@@ -13,10 +48,12 @@ function showLoops(){
         loops.style.display = "inline";
         loopbox.style.display = "inline";
         checkedBox = 1;
+        
     }else{
         loops.style.display = "none";
         loopbox.style.display = "none";
         checkedBox = 0;
+        
     }
 }
 
@@ -55,7 +92,7 @@ function startStop(){
 
 function countdown(){ 
     
-    if(secondsGiven > 0){
+    if(secondsGiven >= 0){
         var secs = new Date(secondsGiven * 1000).toISOString().substr(11, 8);
         var result = secs.replace(/^0(?:0:0?)?/, '');
         document.getElementById("output").innerHTML = result;
@@ -176,6 +213,7 @@ function setTimer(){
     setZero();
     document.getElementById("1").innerHTML = "Start";
     var inputTime = document.getElementById("startTimeBox").value;
+    
     convertSecs(inputTime);
     if(secondsGiven > 86399 || secondsGiven <= 0){
         secondsGiven = 86399;
@@ -185,14 +223,16 @@ function setTimer(){
 
     document.getElementById("startTimeBox").value = result;
     document.getElementById("output").innerHTML = result;
+    document.title = `${result} Looper`
 }
 
 //change range to match value of text input
 function changeRange(){
     if(document.getElementById("soundValue").value >= 100){
         document.getElementById("rangeValue").value = 100;
-    }else if(document.getElementById("soundValue").value <= 0){
+    }else if(document.getElementById("soundValue").value <= 0 || document.getElementById("soundValue") == ""){
         document.getElementById("rangeValue").value = 0;
+        
     }else{
         document.getElementById("rangeValue").value = document.getElementById("soundValue").value;
     }
@@ -205,3 +245,8 @@ function changeVol(){
 }
 
 
+window.addEventListener("keydown", function(event){
+    if(event.code == "Enter"){
+        setTimer();
+    }
+})

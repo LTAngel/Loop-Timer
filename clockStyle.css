@@ -13,7 +13,7 @@ body {
 
 header {
   background: rgb(30, 33, 34);
-  box-shadow: 0 4px 8px 0 rgb(148, 128, 73);
+  box-shadow: 0 4px 8px 0 #9965f4;
 
   /*linear-gradient(
     90deg,
@@ -53,12 +53,12 @@ nav a {
 }
 
 nav a:hover {
-  color: rgb(221, 111, 38);
+  color: #7e3ff2;
   transition: ease-in 400ms;
 }
 
 .active {
-  color: rgb(252, 139, 34);
+  color: #9965f4;
 }
 
 .maincont {
@@ -239,4 +239,10 @@ option {
 
 #soundForm {
   margin-bottom: 1rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

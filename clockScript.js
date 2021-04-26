@@ -1,10 +1,50 @@
 var alarmTime;
 var timerOn = 0;
-var y;
+var z;
 var audio;
 let curElem = 0;
 var elemArray = [];
+var elemText = [];
 var audio = new Audio();
+
+function start(){
+    loadOptions();
+    displayTime();
+}
+
+
+function setOptions(){
+    
+    localStorage.removeItem(elemText);
+    localStorage.setItem('clockSelectedSound', document.getElementById("sounds").value);
+    localStorage.setItem('clockSoundVolume', document.getElementById("rangeValue").value)
+    localStorage.setItem('elemText', JSON.stringify(elemText));
+}
+
+function loadOptions(){
+
+    
+
+    if(localStorage.getItem('elemText')){
+        var tempText = JSON.parse(localStorage.getItem('elemText'));
+        
+
+        for(var i = 0; i < tempText.length; i++){
+            document.getElementById("startTimeBox").value = tempText[i];
+            addAlarm();
+        }
+    }
+    if(localStorage.getItem('selectedSound')){
+        document.getElementById("sounds").value = localStorage.getItem('clockSelectedSound');
+        document.getElementById("soundValue").value = localStorage.getItem('clockSoundVolume');
+        document.getElementById("rangeValue").value = localStorage.getItem('clockSoundVolume')
+    }
+    else{
+        document.getElementById("sounds").value = "Level Up";
+        document.getElementById("soundValue").value = 50;
+        document.getElementById("rangeValue").value = 50;
+    }
+}
 
 
 
@@ -44,15 +84,21 @@ function pauseSound(){
 //convert HH:MM:SS to seconds
 function convertSecs(inputTime){
     
-    
-    
+    var secondsGiven = 0;
+
+    if(inputTime.includes(":")){
+
         var a = inputTime.split(':');
         var i;
-        var secondsGiven = 0;
+        
         for(i = 0; i < a.length; i++){
             secondsGiven *= 60;
             secondsGiven +=parseInt(a[i]);
         }
+
+    }else{
+        secondsGiven = inputTime;
+    }
         
     return secondsGiven;
     
@@ -64,7 +110,7 @@ function convertSecs(inputTime){
 function changeRange(){
     if(document.getElementById("soundValue").value >= 100){
         document.getElementById("rangeValue").value = 100;
-    }else if(document.getElementById("soundValue").value <= 0){
+    }else if(document.getElementById("soundValue").value <= 0 || document.getElementById("soundValue") == ""){
         document.getElementById("rangeValue").value = 0;
     }else{
         document.getElementById("rangeValue").value = document.getElementById("soundValue").value;
@@ -82,7 +128,7 @@ function changeVol(){
 
 function addAlarm(){
     
-    document.getElementById("startButton").innerHTML = "Start";
+    document.getElementById("startButton").innerHTML = "Start Alarm";
     timerOn = 0;
     document.getElementById("nextAlarm").innerHTML = "--:--"
     
@@ -94,6 +140,9 @@ function addAlarm(){
     var newTime = convertSecs(inputValue);
 
     if(inputValue == ""){
+        return;
+    }
+    else if(inputValue > 3599 || inputValue < 0){
         return;
     }
     else{
@@ -113,6 +162,7 @@ function addAlarm(){
                 i++;
             }
             elemArray.splice(i, 0, newTime);
+            elemText.splice(i, 0, document.getElementById("startTimeBox").value);
 
             var list = document.getElementById("setAlarms");
             
@@ -126,6 +176,7 @@ function addAlarm(){
 
         document.getElementById("setAlarms").appendChild(li);
         elemArray[0] = convertSecs(inputValue);
+        elemText[0] = document.getElementById("startTimeBox").value;
         }
     }
 
@@ -140,7 +191,7 @@ function addAlarm(){
     deleteButton.onclick = deleteTask;
     li.appendChild(deleteButton);
 
-    clearTimeout(y);
+    clearTimeout(z);
 }
 
 function deleteTask(){
@@ -149,6 +200,7 @@ function deleteTask(){
     for(var i = 0; i < elemArray.length; i++){
         if(elemArray[i] == convertSecs(this.value)){
             elemArray.splice(i, 1);
+            elemText.splice(i, 1);
         }
     }
 
@@ -156,6 +208,10 @@ function deleteTask(){
     let ul = listItem.parentNode;
     
     ul.removeChild(listItem);
+
+    document.getElementById("startButton").innerHTML = "Start Alarm";
+    timerOn = 0;
+    document.getElementById("nextAlarm").innerHTML = "--:--"
 }
 
 function displayTime(){
@@ -204,11 +260,11 @@ function startAlarms() {
     }
 
     if(!timerOn){
-        document.getElementById("startButton").innerHTML = "Stop";
+        document.getElementById("startButton").innerHTML = "Stop Alarm";
         timerOn = 1;
     }
     else{
-        document.getElementById("startButton").innerHTML = "Start";
+        document.getElementById("startButton").innerHTML = "Start Alarm";
         timerOn = 0;
         document.getElementById("nextAlarm").innerHTML = "--:--"
         
@@ -226,7 +282,7 @@ function countdown(){
 
     
     if(alarmTime < 0){
-        alarmTime += 3600
+        alarmTime += 3600;
         
     }
     
@@ -249,6 +305,7 @@ function countdown(){
 
     if(alarmTime == 0){
         
+        
         if(curElem == elemArray.length - 1){
             curElem = 0;
            
@@ -267,3 +324,10 @@ function countdown(){
     
 
 }
+
+
+window.addEventListener("keydown", function(event){
+    if(event.code == "Enter"){
+        addAlarm();
+    }
+})

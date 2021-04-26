@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="clockStyle.css" />
     <link rel="icon" href="tabIcon.png">
   </head>
-  <body onload="displayTime()">
+  <body onload="start()" onunload="setOptions()">
     <header>
       <div class="container">
         <img src="looper.png" alt="logo" class="logo" />
@@ -42,7 +42,7 @@
         />
         <div>
             <button id="1" type="button" onclick="addAlarm()">Add Alert</button>
-            <button id="startButton" type="button" onclick="startAlarms()">Start</button>
+            <button id="startButton" type="button" onclick="startAlarms()">Start Alarm</button>
         </div>
         <div class="alarmBox">
             <div>
@@ -85,12 +85,14 @@
               oninput="changeVol()"
             />
             <input
-              type="text"
+              type="number"
               id="soundValue"
               min="0"
               max="100"
               value="50"
               oninput="changeRange()"
+              autocomplete="off"
+              title="Volume"
             />
           </form>
         </div>
