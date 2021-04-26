@@ -142,42 +142,37 @@ function addAlarm(){
     if(inputValue == ""){
         return;
     }
-    else if(inputValue > 3599 || inputValue < 0){
+    else if(newTime > 3599 || newTime < 0){
         return;
     }
     else{
         
 
-        if(elemArray.length > 0){
+        if(elemArray.length == 0){
+            document.getElementById("setAlarms").appendChild(li);
+            elemArray[0] = newTime;
+            elemText[0] = document.getElementById("startTimeBox").value;
+        }
+        else{
             var i;
             for(i = 0; i < elemArray.length; i++){
                 if(elemArray[i] == newTime){
+                    
                     return;
                 }
             }
-            
-            
-            i=0;
-            while(elemArray[i] < newTime){
+            i = 0;
+            while(elemArray[i] < newTime && elemArray[i] != undefined){
                 i++;
             }
             elemArray.splice(i, 0, newTime);
             elemText.splice(i, 0, document.getElementById("startTimeBox").value);
 
             var list = document.getElementById("setAlarms");
-            
-            
-            
-
             list.insertBefore(li, list.childNodes[i+1]);
 
         }
-        else{
-
-        document.getElementById("setAlarms").appendChild(li);
-        elemArray[0] = convertSecs(inputValue);
-        elemText[0] = document.getElementById("startTimeBox").value;
-        }
+        
     }
 
     document.getElementById("startTimeBox").value = "";
@@ -215,18 +210,16 @@ function deleteTask(){
 }
 
 function displayTime(){
+
     var today = new Date();
     
     var time = `${appendZeroes(today.getHours())}:${appendZeroes(today.getMinutes())}:${appendZeroes(today.getSeconds())}`;
     document.getElementById("output").innerHTML = time;
 
-    if(timerOn){
-        
+    if(timerOn){        
         countdown();
     }
     var t = setTimeout(displayTime, 1000);
-
-    
 
 }
 
@@ -239,23 +232,22 @@ function appendZeroes(timeValue){
 
 function startAlarms() {
     
-    
     var today = new Date();
-    var startTime = `${appendZeroes(today.getMinutes())}:${appendZeroes(today.getSeconds())}`;
-    var curSecs = convertSecs(startTime);
-    var i;
+    var curSecs = today.getMinutes() * 60 + today.getSeconds();
+    var i = 0;
     curElem = 0;
-    for(i = 0; i < elemArray.length; i++){
-        if(curSecs > elemArray[i]){
-            curElem++;
-        }
-    }
 
-    if(curElem == elemArray.length){
+    while(curSecs < elemArray[i] && elemArray[i] != undefined){
+        i++;
+    }
+    
+
+    if(i == elemArray.length){
         alarmTime = elemArray[0] + 3600 - curSecs;
         curElem = 0;
     }
     else{
+        curElem = i;
         alarmTime = elemArray[curElem] - curSecs;
     }
 
@@ -275,8 +267,8 @@ function startAlarms() {
 function countdown(){ 
     
     var today = new Date();
-    var startTime = `${appendZeroes(today.getMinutes())}:${appendZeroes(today.getSeconds())}`;
-    var curSecs = convertSecs(startTime);
+
+    var curSecs = today.getMinutes() * 60 + today.getSeconds();
 
     alarmTime = elemArray[curElem] - curSecs;
 
@@ -286,22 +278,11 @@ function countdown(){
         
     }
     
-    
+    var secs = new Date(alarmTime * 1000).toISOString().substr(11, 8);
+    var result = secs.replace(/^0(?:0:0?)?/, '');
 
-    if(alarmTime >= 0){
-
-        
-        var secs = new Date(alarmTime * 1000).toISOString().substr(11, 8);
-        var result = secs.replace(/^0(?:0:0?)?/, '');
-
-        
-        document.getElementById("nextAlarm").innerHTML = result;
-        document.title = `${result} Hourly`
-
-    }
-
-    
-
+    document.getElementById("nextAlarm").innerHTML = result;
+    document.title = `${result} Hourly`
 
     if(alarmTime == 0){
         
@@ -320,8 +301,6 @@ function countdown(){
         playSound();
         
     }
-
-    
 
 }
 
