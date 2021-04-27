@@ -3,6 +3,7 @@ var audio;
 var elemArray = [];
 var elemText = [];
 var audio = new Audio();
+var ww;
 
 function start(){
     loadOptions();
@@ -216,8 +217,18 @@ function displayTime(){
     if(timerOn){        
         countdown();
     }
-    var t = setTimeout(displayTime, 1000);
+    //var t = setTimeout(displayTime, 1000);
 
+    
+    if(ww == null){
+        ww = new Worker('worker.js');
+    }
+
+    ww.postMessage('a');
+    
+    ww.onmessage = function (e){
+        displayTime();
+    }
 }
 
 function appendZeroes(timeValue){

@@ -1,7 +1,9 @@
 var secondsGiven = 0;
 var timerOn = 0;
 var t;
+var checkedBox = 0;
 var audio = new Audio();
+var w = null;
 
 function setLoad(){
 
@@ -46,12 +48,12 @@ function showLoops(){
     if(checkBox.checked == true){
         loops.style.display = "inline";
         loopbox.style.display = "inline";
-        
+        checkedBox = 1;
         
     }else{
         loops.style.display = "none";
         loopbox.style.display = "none";
-        
+        checkedBox = 0;
         
     }
 }
@@ -65,9 +67,7 @@ function startStop(){
     //reset if clock is at zero
     if(inputTime == "0:00"){
         document.getElementById("output").innerHTML = inputTime = document.getElementById("startTimeBox").value;
-        if(document.getElementById("loop").checked){
-
-        }
+        
     }
    
     if(!timerOn){ //start function
@@ -75,21 +75,34 @@ function startStop(){
         document.getElementById("1").innerHTML = "Pause";
         
         convertSecs(inputTime);
-        countdown();
+        //countdown();
+
+        if(w == null){
+            w = new Worker('worker.js');
+        }
+
+        w.postMessage('a');
+        
+        w.onmessage = function (e){
+            countdown();
+        }
         
     
     }
     else{ //stop function
         timerOn = 0;
         document.getElementById("1").innerHTML = "Start";
-        clearTimeout(t);
+        w.terminate();
+        w=null;
     }
 
     
 }
 
 
+
 function countdown(){ 
+    
     
     if(secondsGiven >= 0){
         var secs = new Date(secondsGiven * 1000).toISOString().substr(11, 8);
@@ -99,36 +112,30 @@ function countdown(){
 
     }
 
-    var checkedBox = document.getElementById("loop").checked;
-
     if(secondsGiven == 0){
-        setZero();
-        timerOn = 1;
+        
         if(!checkedBox){
             document.getElementById("1").innerHTML = "Start";
         }
-        //implement play sound
         
         playSound();
 
-        
-        
-        
     }
    
+    var going = 0;
 
     if(secondsGiven == -1){
+
+        var loopbox = document.getElementById("loopbox").value;
+        
         
         if(checkedBox){
-            if(document.getElementById("loopbox").value == ""){
+            if(loopbox == "" || loopbox > 0){
+                if(loopbox > 0){
+                    document.getElementById("loopbox").value--;
+                }
                 setTimer();
-                document.getElementById("1").innerHTML = "Pause";
-                timerOn = 1;
-            }else if(document.getElementById("loopbox").value > 0){
-                document.getElementById("loopbox").value--;
-                setTimer();
-                document.getElementById("1").innerHTML = "Pause";
-                timerOn = 1;
+                going = 1;
             }else{
                 document.getElementById("1").innerHTML = "Start";
                 timerOn = 0;
@@ -138,12 +145,24 @@ function countdown(){
         else{
             timerOn = 0;
         }
+        if(!timerOn && w){
+            w.terminate();
+            w=null;
+    
+        }
+        
     }
 
     secondsGiven--;
-    if(timerOn){
-        t = setTimeout(countdown,1000);
+
+    if(going){
+        startStop();
     }
+
+    
+    //if(timerOn){
+    //    t = setTimeout(countdown,1000);
+    //}
     
 }
 
@@ -166,7 +185,7 @@ function playSound(){
     }else{
 
         audio.src = `sounds/${soundFile}.mp3`;
-        //audio = new Audio(`sounds/${soundFile}.mp3`);
+        
     }
 
     
@@ -198,20 +217,16 @@ function convertSecs(inputTime){
     }
 }
 
-//set timer to zero and stop the clock
-function setZero(){
 
-    timerOn = 0;
-    clearTimeout(t);
-    
-    document.getElementById("output").innerHTML = "0:00";
-
-}
 
 //set or reset main timer
 function setTimer(){
     
-    setZero();
+    timerOn = 0;
+    if(w){
+        w.terminate();
+        w=null;
+    }
     document.getElementById("1").innerHTML = "Start";
     var inputTime = document.getElementById("startTimeBox").value;
     
