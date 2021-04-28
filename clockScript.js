@@ -68,7 +68,6 @@ function playSound(){
     }else{
 
         audio.src = `sounds/${soundFile}.mp3`;
-        //audio = new Audio(`sounds/${soundFile}.mp3`);
     }
 
     
@@ -221,9 +220,7 @@ function displayTime(){
     if(timerOn){        
         countdown();
     }
-    //var t = setTimeout(displayTime, 1000);
 
-    
     if(ww == null){
         ww = new Worker('worker.js');
     }
@@ -297,18 +294,6 @@ function countdown(){
     document.title = `${result} Hourly`
 
     if(alarmTime == 0){
-        
-        /*
-        if(curElem == elemArray.length - 1){
-            curElem = 0;
-           
-            
-        }
-        else{
-            curElem++;
-            
-            
-        }*/
 
         playSound();
         

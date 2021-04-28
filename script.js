@@ -121,8 +121,6 @@ function countdown(){
         document.getElementById("output").innerHTML = result;
         document.title = `${result} Looper`
 
-        console.log(result);
-
     }
 
     if(secondsGiven == 0){
@@ -135,13 +133,9 @@ function countdown(){
 
     }
 
-   
-    
-
     if(secondsGiven == -1){
 
         var loopbox = document.getElementById("loopbox").value;
-        
         
         if(checkedBox){
             if(loopbox == "" || loopbox > 0){
@@ -159,24 +153,10 @@ function countdown(){
         else{
             timerOn = 0;
         }
-        /*
-        if(!timerOn && w){
-            w.terminate();
-            w=null;
-    
-        }*/
-        
     }
 
     secondsGiven--;
 
-    
-
-    
-    //if(timerOn){
-    //    t = setTimeout(countdown,1000);
-    //}
-    
 }
 
 //play audio file selected
@@ -232,11 +212,7 @@ function convertSecs(inputTime){
 
 function buttonSet(){
     timerOn = 0;
-    /*
-    if(w){
-        w.terminate();
-        w=null;
-    }*/
+
     document.getElementById("1").innerHTML = "Start";
     setTimer();
 }
