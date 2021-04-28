@@ -1,5 +1,4 @@
 var timerOn = 0;
-var audio;
 var elemArray = [];
 var elemText = [];
 var audio = new Audio();
@@ -42,6 +41,9 @@ function loadOptions(){
         document.getElementById("soundValue").value = 50;
         document.getElementById("rangeValue").value = 50;
     }
+    audio.src = `sounds/whistle.mp3`;
+    audio.volume = 0.001;
+    audio.play();
 }
 
 
@@ -129,7 +131,8 @@ function addAlarm(){
     document.getElementById("startButton").innerHTML = "Start Alarm";
     timerOn = 0;
     document.getElementById("nextAlarm").innerHTML = "--:--"
-    
+    document.getElementById("nextTime").innerHTML = "--:--"
+
     var li = document.createElement("li");
     var inputValue = document.getElementById("startTimeBox").value;
     var y = document.createTextNode(inputValue);
@@ -205,6 +208,7 @@ function deleteTask(){
     document.getElementById("startButton").innerHTML = "Start Alarm";
     timerOn = 0;
     document.getElementById("nextAlarm").innerHTML = "--:--"
+    document.getElementById("nextTime").innerHTML = "--:--"
 }
 
 function displayTime(){
@@ -248,19 +252,19 @@ function startAlarms() {
         document.getElementById("startButton").innerHTML = "Start Alarm";
         timerOn = 0;
         document.getElementById("nextAlarm").innerHTML = "--:--"
-        
+        document.getElementById("nextTime").innerHTML = "--:--:--"
     }
     
 }
 
 function countdown(){ 
 
-    
+    //find input time closest to current time
     var today = new Date();
     var curSecs = today.getMinutes() * 60 + today.getSeconds();
     
     var i = 0;
-    var curElem = 0;
+    
 
     while(curSecs > elemArray[i] && elemArray[i] != undefined){
         i++;
@@ -268,18 +272,17 @@ function countdown(){
     
     var alarmTime;
 
+    //if curent time is past all input times, set next alarm to first input time
     if(i == elemArray.length){
-        alarmTime = elemArray[0] + 3600 - curSecs;
-        curElem = 0;
+        i = 0;
     }
-    else{
-        curElem = i;
-        alarmTime = elemArray[curElem] - curSecs;
-    }
+    
 
-    alarmTime = elemArray[curElem] - curSecs;
+    alarmTime = elemArray[i] - curSecs;
+    var curHour = today.getHours();
 
     if(alarmTime < 0){
+        curHour++;
         alarmTime += 3600;
         
     }
@@ -287,12 +290,15 @@ function countdown(){
     var secs = new Date(alarmTime * 1000).toISOString().substr(11, 8);
     var result = secs.replace(/^0(?:0:0?)?/, '');
 
+    
+
     document.getElementById("nextAlarm").innerHTML = result;
+    document.getElementById("nextTime").innerHTML = `${curHour}:${elemText[i]}`;
     document.title = `${result} Hourly`
 
     if(alarmTime == 0){
         
-        
+        /*
         if(curElem == elemArray.length - 1){
             curElem = 0;
            
@@ -302,7 +308,7 @@ function countdown(){
             curElem++;
             
             
-        }
+        }*/
 
         playSound();
         

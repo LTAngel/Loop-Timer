@@ -3,7 +3,14 @@ var timerOn = 0;
 var t;
 var checkedBox = 0;
 var audio = new Audio();
-var w = null;
+var w = new Worker('worker.js');
+
+w.onmessage = function (){
+    if(timerOn){
+        countdown();
+    }
+}
+
 
 function setLoad(){
 
@@ -27,7 +34,9 @@ function setLoad(){
         document.getElementById("soundValue").value = 50;
         document.getElementById("rangeValue").value = 50;
     }
-
+    audio.src = `sounds/whistle.mp3`;
+    audio.volume = 0.001;
+    audio.play();
 }
 
 function setOptions(){
@@ -76,7 +85,7 @@ function startStop(){
         
         convertSecs(inputTime);
         //countdown();
-
+/*
         if(w == null){
             w = new Worker('worker.js');
         }
@@ -86,14 +95,16 @@ function startStop(){
         w.onmessage = function (e){
             countdown();
         }
-        
+        */
     
     }
     else{ //stop function
         timerOn = 0;
         document.getElementById("1").innerHTML = "Start";
+        /*
         w.terminate();
         w=null;
+        */
     }
 
     
@@ -110,6 +121,8 @@ function countdown(){
         document.getElementById("output").innerHTML = result;
         document.title = `${result} Looper`
 
+        console.log(result);
+
     }
 
     if(secondsGiven == 0){
@@ -121,8 +134,9 @@ function countdown(){
         playSound();
 
     }
+
    
-    var going = 0;
+    
 
     if(secondsGiven == -1){
 
@@ -135,7 +149,7 @@ function countdown(){
                     document.getElementById("loopbox").value--;
                 }
                 setTimer();
-                going = 1;
+                
             }else{
                 document.getElementById("1").innerHTML = "Start";
                 timerOn = 0;
@@ -145,19 +159,18 @@ function countdown(){
         else{
             timerOn = 0;
         }
+        /*
         if(!timerOn && w){
             w.terminate();
             w=null;
     
-        }
+        }*/
         
     }
 
     secondsGiven--;
 
-    if(going){
-        startStop();
-    }
+    
 
     
     //if(timerOn){
@@ -217,17 +230,23 @@ function convertSecs(inputTime){
     }
 }
 
+function buttonSet(){
+    timerOn = 0;
+    /*
+    if(w){
+        w.terminate();
+        w=null;
+    }*/
+    document.getElementById("1").innerHTML = "Start";
+    setTimer();
+}
 
 
 //set or reset main timer
 function setTimer(){
     
-    timerOn = 0;
-    if(w){
-        w.terminate();
-        w=null;
-    }
-    document.getElementById("1").innerHTML = "Start";
+    
+    
     var inputTime = document.getElementById("startTimeBox").value;
     
     convertSecs(inputTime);
@@ -263,6 +282,6 @@ function changeVol(){
 
 window.addEventListener("keydown", function(event){
     if(event.code == "Enter"){
-        setTimer();
+        buttonSet();
     }
 })

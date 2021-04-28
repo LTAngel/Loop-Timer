@@ -237,6 +237,10 @@ option {
   font-weight: bold;
 }
 
+#nextTime {
+  font-weight: bold;
+}
+
 #soundForm {
   margin-bottom: 1rem;
 }
