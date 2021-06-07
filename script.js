@@ -34,9 +34,7 @@ function setLoad(){
         document.getElementById("soundValue").value = 50;
         document.getElementById("rangeValue").value = 50;
     }
-    audio.src = `sounds/whistle.mp3`;
-    audio.volume = 0.001;
-    audio.play();
+    
 }
 
 function setOptions(){
@@ -82,29 +80,16 @@ function startStop(){
     if(!timerOn){ //start function
         timerOn = 1;
         document.getElementById("1").innerHTML = "Pause";
-        
+        audio.src = `sounds/whistle.mp3`;
+        audio.volume = 0.001;
+        audio.play();
         convertSecs(inputTime);
-        //countdown();
-/*
-        if(w == null){
-            w = new Worker('worker.js');
-        }
 
-        w.postMessage('a');
-        
-        w.onmessage = function (e){
-            countdown();
-        }
-        */
-    
     }
     else{ //stop function
         timerOn = 0;
         document.getElementById("1").innerHTML = "Start";
-        /*
-        w.terminate();
-        w=null;
-        */
+
     }
 
     

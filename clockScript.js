@@ -24,14 +24,20 @@ function loadOptions(){
 
     if(localStorage.getItem('elemText')){
         var tempText = JSON.parse(localStorage.getItem('elemText'));
-        
 
         for(var i = 0; i < tempText.length; i++){
             document.getElementById("startTimeBox").value = tempText[i];
             addAlarm();
         }
+
     }
-    if(localStorage.getItem('selectedSound')){
+    else{
+        document.getElementById("startTimeBox").value = "14:30";
+        addAlarm();
+        document.getElementById("startTimeBox").value = "44:30";
+        addAlarm();
+    }
+    if(localStorage.getItem('clockSelectedSound')){
         document.getElementById("sounds").value = localStorage.getItem('clockSelectedSound');
         document.getElementById("soundValue").value = localStorage.getItem('clockSoundVolume');
         document.getElementById("rangeValue").value = localStorage.getItem('clockSoundVolume')
@@ -41,9 +47,7 @@ function loadOptions(){
         document.getElementById("soundValue").value = 50;
         document.getElementById("rangeValue").value = 50;
     }
-    audio.src = `sounds/whistle.mp3`;
-    audio.volume = 0.001;
-    audio.play();
+    
 }
 
 
@@ -244,6 +248,9 @@ function startAlarms() {
     if(!timerOn){
         document.getElementById("startButton").innerHTML = "Stop Alarm";
         timerOn = 1;
+        audio.src = `sounds/whistle.mp3`;
+        audio.volume = 0.001;
+        audio.play();
     }
     else{
         document.getElementById("startButton").innerHTML = "Start Alarm";
